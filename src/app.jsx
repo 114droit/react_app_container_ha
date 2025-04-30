@@ -1,4 +1,4 @@
-import "./App.css";
+import "./app.css";
 import Answers from "./components/answers.jsx";
 import Question from "./components/question.jsx";
 
