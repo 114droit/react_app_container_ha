@@ -8,13 +8,16 @@ Small React-Quiz-App i build as a Homework for learning Docker
 
 Build-Ergebnis, welches wir aus dem dist-Verzeichnis ins Image kopieren
 
+
 ### **Welche Rolle spielt nginx in diesem Kontext?**
 
 Dient hier als Webserver, der einen statischen Inhalt ausliefert
 
+
 ### **Warum wird der Entwicklungsmodus (npm run dev) nicht für den Produktivbetrieb genutzt?**
 
 Der Entwicklungsmodus ist für schnelle Entwicklung und Iteration ausgelegt und bietet somit aufgrund von bspw. höherem Ressourcenverbrauch, potenzieller Sicherheitsrisiken, vieler zusätzlicher Funktionen, schlechterem Caching eine schlechter Performance, Sicherheit und Stabilität, als der Produktionsmodus
+
 
 ### **Was ist der Vorteil eines Containers gegenüber einem „lokalen Build“?**
 
