@@ -102,9 +102,11 @@ app.post('/answers', (req, res) => {
 });
 
 app.delete('/questions/:id', (req, res) => {
-    const id = req.params.id;
-    if (questions[id]) {
-        questions.splice(id, 1);
+    const id = Number(req.params.id);
+    const question = questions.find(question => question.id === id);
+
+    if (question) {
+        questions = questions.filter(question => question.id !== id);
         res.status(200).json({ message: 'Question deleted successfully' });
     } else {
         res.status(404).json({ message: 'Question not found' });
@@ -122,3 +124,4 @@ app.delete('/answers/:id', (req, res) => {
         res.status(404).json({ message: 'Answer not found' });
     }
 });
+
