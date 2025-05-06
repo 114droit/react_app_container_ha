@@ -1,5 +1,5 @@
 
-function Question() {
+function Questions() {
   return (
     <div className="flex justify-center items-center bg-gray-700 border rounded-sm h-20 w-100">
       Wie viele Bundesländer hat Deutschland?
@@ -7,4 +7,4 @@ function Question() {
   );
 }
 
-export default Question;
+export default Questions;

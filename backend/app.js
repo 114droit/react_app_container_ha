@@ -10,17 +10,11 @@ app.use(cors());
 let questions = [
     { 
         id: 1,
-        question: 'What is your name?'
-    }
-];
-
-let answers = [
-    { 
-        id: 1,
-        answerA: "My name is Marc Droit.",
-        answerB: 'My name is Marc Droit.',
-        answerC: 'My name is Marc Droit.',
-        answerD: 'My name is Marc Droit.'
+        question: 'What is your name?',
+        answerA: 'None',
+        answerB: 'None',
+        answerC: 'None',
+        correctAnswer: 'Marc Droit'
     }
 ];
 
@@ -33,11 +27,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/questions', (req, res) => {
-    if (questions) {
+    if (questions.length > 0) {
         res.status(200).json(questions);
     }
     else {
-        res.status(404).json({ message: 'No questions found' });
+        res.status(404).json({ message: 'No entries found' });
     }
 });
 
@@ -48,27 +42,7 @@ app.get('/questions/:id', (req, res) => {
     if (question) {
         res.status(200).json(question);
     } else {
-        res.status(404).json({ message: 'Question not found' });
-    }
-});
-
-app.get('/answers', (req, res) => {
-    if (answers) {
-        res.status(200).json(answers);
-    }
-    else {
-        res.status(404).json({ message: 'No answers found' });
-    }
-});
-
-app.get('/answers/:id', (req, res) => {
-    const id = Number(req.params.id);
-    const answer = answers.find(answer => answer.id === id);
-
-    if (answer) {
-        res.status(200).json(answer);
-    } else {
-        res.status(404).json({ message: 'Answer not found' });
+        res.status(404).json({ message: 'Entry not found' });
     }
 });
 
@@ -76,28 +50,16 @@ app.post('/questions', (req, res) => {
     const question = {
         id: questions.length + 1,
         question: req.body.question,
-    };
-    if (req.body.question) {
-        questions.push(question);
-        res.status(201).json({ message: 'Question added successfully' });
-    } else {
-        res.status(400).json({ message: 'Question is required' });
-    }
-});
-
-app.post('/answers', (req, res) => {
-    const answer = {
-        id: answers.length + 1,
         answerA: req.body.answerA,
         answerB: req.body.answerB,
         answerC: req.body.answerC,
-        answerD: req.body.answerD
+        correctAnswer: req.body.correctAnswer
     };
-    if (req.body.answerA && req.body.answerB && req.body.answerC && req.body.answerD) {
-        answers.push(answer);
-        res.status(201).json({ message: 'Answer added successfully' });
+    if (req.body.question && req.body.answerA && req.body.answerB && req.body.answerC && req.body.correctAnswer) {
+        questions.push(question);
+        res.status(201).json({ message: 'Entry added successfully' });
     } else {
-        res.status(400).json({ message: 'Answer is required' });
+        res.status(400).json({ message: 'Questions and answers required' });
     }
 });
 
@@ -107,21 +69,8 @@ app.delete('/questions/:id', (req, res) => {
 
     if (question) {
         questions = questions.filter(question => question.id !== id);
-        res.status(200).json({ message: 'Question deleted successfully' });
+        res.status(200).json({ message: 'Entry deleted successfully' });
     } else {
-        res.status(404).json({ message: 'Question not found' });
+        res.status(404).json({ message: 'Entry not found' });
     }
 });
-
-app.delete('/answers/:id', (req, res) => {
-    const id = Number(req.params.id);
-    const answer = answers.find(answer => answer.id === id);
-
-    if (answer) {
-        answers = answers.filter(answer => answer.id !== id);
-        res.status(200).json({ message: 'Answer deleted successfully' });
-    } else {
-        res.status(404).json({ message: 'Answer not found' });
-    }
-});
-
