@@ -1,5 +1,6 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import fs from 'fs';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,6 +19,17 @@ let questions = [
     }
 ];
 
+function getQuestions() {
+    try {
+        const raw = fs.readFileSync('questions.json');
+        const parsed = JSON.parse(raw);
+        return parsed.questions || [];
+    } catch (error) {
+        console.error('Error reading questions file:', error);
+        return [];
+    }
+}
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
@@ -27,6 +39,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/questions', (req, res) => {
+    const questions = getQuestions();
     if (questions.length > 0) {
         res.status(200).json(questions);
     }
