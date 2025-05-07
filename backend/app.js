@@ -6,7 +6,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:5173', 'http://localhost:3000'] // Anfragen von localhost:5173 und localhost:3000 erlauben
+}));
 
 let questions = [
     { 
@@ -30,7 +32,7 @@ function getQuestions() {
     }
 }
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
@@ -87,3 +89,16 @@ app.delete('/questions/:id', (req, res) => {
         res.status(404).json({ message: 'Entry not found' });
     }
 });
+
+// Gracefull shutdown
+// This function will be called when the server is shutting down
+function shutdown() {
+    console.log('Shutting down server...');
+    server.close(() => {
+        console.log('Server shut down gracefully');
+        process.exit(0);
+    });
+}
+
+process.on('SIGINT', shutdown);  // Handle Ctrl+C Signal Interrupt
+process.on('SIGTERM', shutdown); // Handle termination signal from process manager (e.g., PM2, Docker)

@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import Pages from './components/pages.jsx'
-import "./app.css";
+import "./main.css";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
