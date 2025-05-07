@@ -1,0 +1,12 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "Test?",
+      "answerA": "TestA",
+      "answerB": "TestB",
+      "answerC": "TestC",
+      "correctAnswer": "correctTest"
+    }
+  ]
+}

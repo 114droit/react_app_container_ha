@@ -10,25 +10,25 @@ app.use(cors({
     origin: ['http://localhost:5173', 'http://localhost:3000'] // Anfragen von localhost:5173 und localhost:3000 erlauben
 }));
 
-let questions = [
-    { 
-        id: 1,
-        question: 'What is your name?',
-        answerA: 'None',
-        answerB: 'None',
-        answerC: 'None',
-        correctAnswer: 'Marc Droit'
-    }
-];
-
+// Middleware to load questions from JSON file
 function getQuestions() {
     try {
-        const raw = fs.readFileSync('questions.json');
+        const raw = fs.readFileSync('data/questions.json');
         const parsed = JSON.parse(raw);
         return parsed.questions || [];
     } catch (error) {
         console.error('Error reading questions file:', error);
         return [];
+    }
+}
+
+// Middleware to save questions to JSON file
+function saveQuestions(questions) {
+    try {
+        const data = JSON.stringify({ questions }, null, 2);
+        fs.writeFileSync('data/questions.json', data);
+    } catch (error) {
+        console.error('Error saving questions file:', error);
     }
 }
 
@@ -52,7 +52,7 @@ app.get('/questions', (req, res) => {
 
 app.get('/questions/:id', (req, res) => {
     const id = Number(req.params.id);
-    const question = questions.find(question => question.id === id);
+    const question = getQuestions().find(question => question.id === id);
 
     if (question) {
         res.status(200).json(question);
@@ -63,7 +63,7 @@ app.get('/questions/:id', (req, res) => {
 
 app.post('/questions', (req, res) => {
     const question = {
-        id: questions.length + 1,
+        id: getQuestions().length + 1,
         question: req.body.question,
         answerA: req.body.answerA,
         answerB: req.body.answerB,
@@ -71,7 +71,7 @@ app.post('/questions', (req, res) => {
         correctAnswer: req.body.correctAnswer
     };
     if (req.body.question && req.body.answerA && req.body.answerB && req.body.answerC && req.body.correctAnswer) {
-        questions.push(question);
+        saveQuestions([...getQuestions(), question]);
         res.status(201).json({ message: 'Entry added successfully' });
     } else {
         res.status(400).json({ message: 'Questions and answers required' });
@@ -80,10 +80,11 @@ app.post('/questions', (req, res) => {
 
 app.delete('/questions/:id', (req, res) => {
     const id = Number(req.params.id);
-    const question = questions.find(question => question.id === id);
+    const question = getQuestions().find(question => question.id === id);
 
     if (question) {
-        questions = questions.filter(question => question.id !== id);
+        const questions = getQuestions().filter(question => question.id !== id);
+        saveQuestions(questions);
         res.status(200).json({ message: 'Entry deleted successfully' });
     } else {
         res.status(404).json({ message: 'Entry not found' });

@@ -35,7 +35,7 @@ function Edit() {
         setMessage("Failed to create quiz.");
       }
     } catch (error) {
-      setMessage("An error occurred while creating the quiz.");
+      console.error("Error:", error);
     } finally {
       setLoading(false); // Ladezustand deaktivieren
     }
@@ -56,7 +56,7 @@ function Edit() {
         setMessage("Failed to delete quiz.");
       }
     } catch (error) {
-      setMessage("An error occurred while deleting the quiz.");
+      console.error("Error:", error);
     } finally {
       setLoading(false); // Ladezustand deaktivieren
     }
