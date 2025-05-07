@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000'] // Anfragen von localhost:5173 und localhost:3000 erlauben
+    origin: ['http://localhost:5173', 'http://localhost:8080'] // Anfragen von localhost:5173 und localhost:3000 erlauben
 }));
 
 // Middleware to load questions from JSON file
