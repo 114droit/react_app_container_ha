@@ -32,13 +32,17 @@ function saveQuestions(questions) {
     }
 }
 
+
+// This will start the server and listen on the specified port
 const server = app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
+// API endpoints
 app.get('/', (req, res) => {
     res.status(200).json({ message: 'Welcome to the API!' });
 });
+
 
 app.get('/questions', (req, res) => {
     const questions = getQuestions();
