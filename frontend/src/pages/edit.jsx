@@ -15,7 +15,7 @@ function Edit() {
   const createNewQuiz = async () => {
     setLoading(true); // Ladezustand aktivieren
     try {
-      const response = await fetch(`${API_URL}/questions`, {
+      const response = await fetch(`/${API_URL}/questions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ function Edit() {
   const deleteQuiz = async () => {
     setLoading(true); // Ladezustand aktivieren
     try {
-      const response = await fetch(`${API_URL}/questions/${id}`, {
+      const response = await fetch(`/${API_URL}/questions/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
