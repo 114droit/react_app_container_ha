@@ -74,4 +74,4 @@ id = PK, questions_id = FK
 
 ### **Warum ist die Nutzung einer Datenbank für persistente Daten wichtig im Kontext von containerisierten Anwendungen und DevOps?**
 
-Sie ermöglicht die Erhaltung von Daten, die über die Lebensdauer eines Containers hinaus bestehen bleiben, was für den Betrieb und die Skalierung von Anwendungen unerlässlich ist. Persistente Daten sind notwendig, um den Zustand der Anwendung zu speichern, Daten zu verarbeiten und die Anwendungen wiederherzustellen, wenn Container neu gestartet oder verschoben werden.
+> Sie ermöglicht die Erhaltung von Daten, die über die Lebensdauer eines Containers hinaus bestehen bleiben, was für den Betrieb und die Skalierung von Anwendungen unerlässlich ist. Persistente Daten sind notwendig, um den Zustand der Anwendung zu speichern, Daten zu verarbeiten und die Anwendungen wiederherzustellen, wenn Container neu gestartet oder verschoben werden.
