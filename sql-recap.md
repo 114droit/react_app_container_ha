@@ -48,11 +48,11 @@ id = PK, questions_id = FK
 
 > Datenbanken ermöglichen eine effizientere Datenverwaltung, verbesserte Skalierbarkeit und größere Flexibilität beim Abfragen und Modifizieren von Daten.
 
->* 1. Effizientere Datenverwaltung
+* 1. Effizientere Datenverwaltung
 
->* 2. Verbesserte Skalierbarkeit
+* 2. Verbesserte Skalierbarkeit
 
->* 3. Flexibilität beim Abfragen und Modifizieren
+* 3. Flexibilität beim Abfragen und Modifizieren
 
 ### **Was ist der Hauptzweck eines Primärschlüssels in einer Tabelle, und wie hast du dieses Konzept in deinem Entwurf umgesetzt?**
 
@@ -60,8 +60,16 @@ id = PK, questions_id = FK
 
 ### **(Falls du einen Fremdschlüssel entworfen hast): Was ist der Zweck eines Fremdschlüssels und welche Beziehung modelliert dein Fremdschlüssel?**
 
-
+> Der Fremdschlüsel ist ebenfalls eine Spalte und verweist auf den Primärschlüssel einer anderen Tabelle, um so eine Verbindung/Verhältnis (Relation) herzustellen. Mein Fremdschlüssel modelliert die Beziehung zwischen der jeweiligen Frage und den möglichen Antworten, die im Quiz vorgegeben werden sollen.
 
 ### **Wie würden die API-Endpunkte deiner Backend-Anwendung (GET /items, GET /items/:id, POST /items, DELETE /items/:id) theoretisch auf die von dir formulierten SQL-Abfragen abgebildet werden? Welche Art von Abfrage (SELECT, INSERT, UPDATE, DELETE) würde jeder Endpunkt typischerweise ausführen?**
+
+* GET /questions ---> SELECT * FROM questions
+
+* GET /questions/:id ---> SELECT id, content FROM questions WHERE id = 1;
+
+* POST /items ---> INSERT INTO questions (id, content) VALUES (1, 'abc?');
+
+* DELETE /items/:id ---> DELETE FROM questions WHERE id = 1;
 
 ### **Warum ist die Nutzung einer Datenbank für persistente Daten wichtig im Kontext von containerisierten Anwendungen und DevOps?**
