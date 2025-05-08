@@ -1,20 +1,24 @@
-# ReactApp + Container Hausuafgabe
+# ReactApp + Container Hausaufgabe
 
-Small React-Quiz-App i build as a Homework for learning Docker
+Small React-Quiz-App i did build as a Homework for learning Docker
 
-## Reflexion
+## Datenbank-Schema
 
-### **Was wird genau im Image gespeichert – Quellcode oder Build-Ergebnis?**
+Siehe sql-recap.md im Wurzelverzeichnis
+
+## Reflexion I
+
+**Was wird genau im Image gespeichert – Quellcode oder Build-Ergebnis?**
 
 Build-Ergebnis, welches wir aus dem dist-Verzeichnis ins Image kopieren
 
 
-### **Welche Rolle spielt nginx in diesem Kontext?**
+**Welche Rolle spielt nginx in diesem Kontext?**
 
 Dient hier als Webserver, der einen statischen Inhalt ausliefert
 
 
-### **Warum wird der Entwicklungsmodus (npm run dev) nicht für den Produktivbetrieb genutzt?**
+**Warum wird der Entwicklungsmodus (npm run dev) nicht für den Produktivbetrieb genutzt?**
 
 Der Entwicklungsmodus ist für schnelle Entwicklung und Iteration ausgelegt und bietet somit aufgrund von bspw. höherem Ressourcenverbrauch, potenzieller Sicherheitsrisiken, vieler zusätzlicher Funktionen, schlechterem Caching eine schlechter Performance, Sicherheit und Stabilität, als der Produktionsmodus
 
