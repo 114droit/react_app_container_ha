@@ -6,16 +6,16 @@ import logger from 'utils/logger.js';
 const app = express();
 const port = process.env.PORT || 3000;
 
-const db_host = process.env.DB_HOST
-logger.info(`DB_HOST: ${db_host}`);
-const db_port = process.env.DB_PORT
-logger.info(`DB_PORT: ${db_port}`);
-const db_user = process.env.DB_USER
-logger.info(`DB_USER: ${db_user}`);
-const db_password = process.env.DB_PASSWORD
-logger.info(`DB_PASSWORD: ******`);
-const db_name = process.env.DB_NAME
-logger.info(`DB_NAME: ${db_name}`);
+// Logger for logging DB connection details
+logger.info('Starting backend Api...');
+logger.info('Database Configuration (received via ENV):',{
+    DB_HOST: process.env.DB_HOST,
+    DB_PORT: process.env.DB_PORT,
+    DB_USER: process.env.DB_USER,
+    DB_NAME: process.env.DB_NAME,
+    DB_PASSWORD: '******'
+});
+logger.info('----------------------------------------------------');
 
 app.use(express.json());
 app.use(cors({
@@ -29,7 +29,7 @@ function getQuestions() {
         const parsed = JSON.parse(raw);
         return parsed.questions || [];
     } catch (error) {
-        console.error('Error reading questions file:', error);
+        logger.error('Error reading questions file:');
         return [];
     }
 }
@@ -40,44 +40,57 @@ function saveQuestions(questions) {
         const data = JSON.stringify({ questions }, null, 2);
         fs.writeFileSync('data/questions.json', data);
     } catch (error) {
-        console.error('Error saving questions file:', error);
+        logger.error('Error saving questions file:');
     }
 }
 
 
 // This will start the server and listen on the specified port
 const server = app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  logger.info(`Server is running on http://localhost:${port}`);
 });
 
 // API endpoints
 app.get('/', (req, res) => {
     res.status(200).json({ message: 'Welcome to the API!' });
+    logger.info('API root endpoint accessed');
 });
 
 
 app.get('/questions', (req, res) => {
+    logger.info('Trying to fetch all questions');
     const questions = getQuestions();
     if (questions.length > 0) {
         res.status(200).json(questions);
+        logger.info('Questions fetched successfully');
     }
     else {
         res.status(404).json({ message: 'No entries found' });
+        logger.error('No entries found');
     }
 });
 
 app.get('/questions/:id', (req, res) => {
+    if (!req.params.id) {
+        res.status(400).json({ message: 'ID is required' });
+        logger.error('ID is required');
+        return;
+    }
+    logger.info('Trying to fetch question with ID:', req.params.id);
     const id = Number(req.params.id);
     const question = getQuestions().find(question => question.id === id);
 
     if (question) {
         res.status(200).json(question);
+        logger.info('Question fetched successfully');
     } else {
         res.status(404).json({ message: 'Entry not found' });
+        logger.error('Entry not found');
     }
 });
 
 app.post('/questions', (req, res) => {
+    logger.info('Trying to add new question');
     const question = {
         id: getQuestions().length + 1,
         question: req.body.question,
@@ -89,12 +102,20 @@ app.post('/questions', (req, res) => {
     if (req.body.question && req.body.answerA && req.body.answerB && req.body.answerC && req.body.correctAnswer) {
         saveQuestions([...getQuestions(), question]);
         res.status(201).json({ message: 'Entry added successfully' });
+        logger.info('Entry added successfully');
     } else {
-        res.status(400).json({ message: 'Questions and answers required' });
+        res.status(400).json({ message: '1 Question and 4 answers required' });
+        logger.error('1 Question and 4 answers required');
     }
 });
 
 app.delete('/questions/:id', (req, res) => {
+    logger.info('Trying to delete question with ID:', req.params.id);
+    if (!req.params.id) {
+        res.status(400).json({ message: 'ID is required' });
+        logger.error('ID is required');
+        return;
+    }
     const id = Number(req.params.id);
     const question = getQuestions().find(question => question.id === id);
 
@@ -102,17 +123,19 @@ app.delete('/questions/:id', (req, res) => {
         const questions = getQuestions().filter(question => question.id !== id);
         saveQuestions(questions);
         res.status(200).json({ message: 'Entry deleted successfully' });
+        logger.info('Entry deleted successfully');
     } else {
         res.status(404).json({ message: 'Entry not found' });
+        logger.error('Entry not found');
     }
 });
 
 // Gracefull shutdown
 // This function will be called when the server is shutting down
 function shutdown() {
-    console.log('Shutting down server...');
+    logger.info('Shutting down server...');
     server.close(() => {
-        console.log('Server shut down gracefully');
+        logger.info('Server shut down gracefully');
         process.exit(0);
     });
 }
