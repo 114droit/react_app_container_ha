@@ -1,9 +1,21 @@
 import express from 'express';
 import cors from 'cors';
 import fs from 'fs';
+import logger from 'utils/logger.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+const db_host = process.env.DB_HOST
+logger.info(`DB_HOST: ${db_host}`);
+const db_port = process.env.DB_PORT
+logger.info(`DB_PORT: ${db_port}`);
+const db_user = process.env.DB_USER
+logger.info(`DB_USER: ${db_user}`);
+const db_password = process.env.DB_PASSWORD
+logger.info(`DB_PASSWORD: ******`);
+const db_name = process.env.DB_NAME
+logger.info(`DB_NAME: ${db_name}`);
 
 app.use(express.json());
 app.use(cors({
