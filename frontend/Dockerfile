@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY package*.json .
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
@@ -20,9 +20,9 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-EXPOSE 80
+RUN echo "OK" > /usr/share/nginx/html/healthz.html
 
-HEALTHCHECK CMD curl -f http://localhost:80 || exit 1
+EXPOSE 80
 
 # Nginx wird durch FROM nginx:alpine aufotmatisch gestartet
 # Und läuft im Vordergrund, daher kein CMD-Befehl notwendig

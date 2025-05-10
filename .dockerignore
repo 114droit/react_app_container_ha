@@ -1,6 +1,13 @@
+*/.gitignore
 .gitignore
+*/node_modules
 node_modules
+*/.git
 .git
-Dockerfile
-dist
-.env
+*/Dockerfile
+*/dist
+*/.env
+README.md
+*/README.md
+dockerignore
+docker-compose.yml

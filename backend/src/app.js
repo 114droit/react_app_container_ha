@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import fs from 'fs';
-import logger from 'utils/logger.js';
+import logger from './utils/logger.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,7 +25,7 @@ app.use(cors({
 // Middleware to load questions from JSON file
 function getQuestions() {
     try {
-        const raw = fs.readFileSync('data/questions.json');
+        const raw = fs.readFileSync('/app/data/questions.json');
         const parsed = JSON.parse(raw);
         return parsed.questions || [];
     } catch (error) {
@@ -38,7 +38,7 @@ function getQuestions() {
 function saveQuestions(questions) {
     try {
         const data = JSON.stringify({ questions }, null, 2);
-        fs.writeFileSync('data/questions.json', data);
+        fs.writeFileSync('/app/data/questions.json', data);
     } catch (error) {
         logger.error('Error saving questions file:');
     }

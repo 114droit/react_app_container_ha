@@ -6,7 +6,7 @@ COPY package*.json .
 
 RUN npm ci --production
 
-COPY app.js .
+COPY . .
 
 EXPOSE 3000
 
