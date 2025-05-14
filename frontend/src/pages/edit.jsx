@@ -64,42 +64,42 @@ function Edit() {
 
   if (!message)
     return (
-      <div className="bg-gray-900 text-white h-screen flex justify-center items-center">
-        <div className="h-70">
+      <div className="bg-gray-900 text-amber-100 h-screen flex justify-center items-center">
+        <div className="h-120">
           <h1 className="text-3xl font-bold mb-4">Edit Quiz</h1>
           <form className="space-y-4">
             <input
               type="text"
               placeholder="Question"
-              className="w-full p-2 bg-gray-800 border border-gray-700 rounded"
+              className="flex w-200 p-2 bg-gray-800 border border-gray-700 rounded"
               onChange={(event) => setQuestion(event.target.value)}
             />
             <input
               type="text"
               placeholder="Answer A"
-              className="w-full p-2 bg-gray-800 border border-gray-700 rounded"
+              className="flex w-200 p-2 bg-gray-800 border border-gray-700 rounded"
               onChange={(event) => setAnswerA(event.target.value)}
             />
             <input
               type="text"
               placeholder="Answer B"
-              className="w-full p-2 bg-gray-800 border border-gray-700 rounded"
+              className="flex w-200 p-2 bg-gray-800 border border-gray-700 rounded"
               onChange={(event) => setAnswerB(event.target.value)}
             />
             <input
               type="text"
               placeholder="Answer C"
-              className="w-full p-2 bg-gray-800 border border-gray-700 rounded"
+              className="flex w-200 p-2 bg-gray-800 border border-gray-700 rounded"
               onChange={(event) => setAnswerC(event.target.value)}
             />
             <input
               type="text"
               placeholder="Correct Answer"
-              className="w-full p-2 bg-gray-800 border border-gray-700 rounded"
+              className="flex w-200 p-2 bg-gray-800 border border-gray-700 rounded"
               onChange={(event) => setCorrectAnswer(event.target.value)}
             />
             <button
-              className="w-full p-2 bg-blue-600 hover:bg-blue-700 rounded"
+              className="flex-row w-64 mr-72 justify-center p-2 bg-emerald-500 hover:bg-emerald-400 inset-shadow-sm inset-shadow-emerald-800 shadow-xl shadow-emeral-800 hover:shadow-emerald-400/50 transition-all rounded"
               onClick={(e) => {
                 e.preventDefault();
                 createNewQuiz();
@@ -111,11 +111,11 @@ function Edit() {
             <input
               type="text"
               placeholder="ID"
-              className="w-10 p-2 bg-gray-800 border border-gray-700 rounded"
+              className="w-10 mr-4 p-2 bg-gray-800 border border-gray-700 rounded"
               onChange={(event) => setId(event.target.value)}
             />
             <button
-              className="w-full p-2 bg-red-600 hover:bg-red-700 rounded"
+              className="flex-row w-50 bg-rose-500 hover:bg-rose-400 p-2 bg- rounded"
               onClick={(e) => {
                 e.preventDefault();
                 deleteQuiz();

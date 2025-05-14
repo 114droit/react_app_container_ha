@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import fs from 'fs';
 import logger from './utils/logger.js';
+// import health from './utils/health.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -21,6 +22,9 @@ app.use(express.json());
 app.use(cors({
     origin: ['http://localhost:5173', 'http://localhost:8080'] // Anfragen von localhost:5173 und localhost:3000 erlauben
 }));
+
+// Health check endpoint
+// app.use('/api/health', health());
 
 // Middleware to load questions from JSON file
 function getQuestions() {
