@@ -8,7 +8,7 @@ import {
     createQuestion,
     deleteQuestion,
 } from "./services/questionsServices.js";
-import { testDbConnection } from "./db.js";
+// import { testDbConnection } from "./db.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -31,12 +31,16 @@ logger.info("Database Configuration (received via ENV):", {
 });
 logger.info("----------------------------------------------------");
 
-// Health check endpoint
-// app.use('/api/health', health());
 
 // This will start the server and listen on the specified port
 const server = app.listen(port, () => {
     logger.info(`Server is running on http://localhost:${port}`);
+});
+
+// Health check endpoint
+app.get("/health", (req, res) => {
+    res.status(200).json({ status: "OK" });
+    logger.info("Health check successful");
 });
 
 // API endpoints
