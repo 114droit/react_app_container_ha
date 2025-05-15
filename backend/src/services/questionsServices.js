@@ -15,13 +15,13 @@ async function findQuestionById(id) {
 
 // Neue Frage erstellen
 async function createQuestion(question) {
-    const res = await query ('INSERT INTO questions (question, answerA, answerB, answerC, correctAnswer) VALUES ($1, $2, $3, $4, $5) RETURNING id;',[question.question, question.answerA, question.answerB, question.answerC, question.correctAnswer]); // $1, $2, ... Platzhalter für Parameter
+    const res = await query ('INSERT INTO questions (question, answerA, answerB, answerC, correctAnswer) VALUES ($1, $2, $3, $4, $5) RETURNING id, question, answerA, answerB, answerC, correctAnswer;',[question.question, question.answerA, question.answerB, question.answerC, question.correctAnswer]); // $1, $2, ... Platzhalter für Parameter
     return res.rows[0]; // Gibt das neu erstellte Question-Objekt zurück
 }
 
 // Frage löschen
 async function deleteQuestion(id) {
-    const res = await query("DELETE FROM questions WHERE id = $1", [id]); // $1 Platzhalter für Parameter
+    const res = await query("DELETE FROM questions WHERE id = $1 RETURNING id", [id]); // $1 Platzhalter für Parameter
     return res.rows[0]; // Gibt das gelöschte Question-Objekt zurück oder undefined, wenn nichts gelöscht wurde
 }
 

@@ -28,7 +28,7 @@ services:
       DB_HOST: database
       DB_PORT: 5432
       DB_USER: ${POSTGRES_USER}
-      DB_PASSWORD: §{POSTGRES_PASSWORD}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
       DB_NAME: ${POSTGRES_DB}
     expose:
       - 3000

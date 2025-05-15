@@ -24,12 +24,6 @@ logger.info('Database Configuration (received via ENV):',{
     DB_PASSWORD: '******'
 });
 logger.info('----------------------------------------------------');
-try {
-    testDbConnection();
-    logger.info('Database connection successful');
-} catch (error) {
-    logger.error('Database connection error:', error);
-}
 
 // Health check endpoint
 // app.use('/api/health', health());
@@ -69,9 +63,9 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/questions', (req, res) => {
+app.get('/questions', async (req, res) => {
     logger.info('Trying to fetch all questions');
-    const questions = findAllQuestions();
+    const questions = await findAllQuestions();
     if (questions.length > 0) {
         res.status(200).json(questions);
         logger.info('Questions fetched successfully');
@@ -82,15 +76,15 @@ app.get('/questions', (req, res) => {
     }
 });
 
-app.get('/questions/:id', (req, res) => {
-    if (!req.params.id) {
+app.get('/questions/:id', async (req, res) => {
+    const id = Number(req.params.id);
+    if (!id) {
         res.status(400).json({ message: 'ID is required' });
         logger.error('ID is required');
         return;
     }
-    logger.info('Trying to fetch question with ID:', req.params.id);
-    const id = Number(req.params.id);
-    const question = findQuestionById(id);
+    logger.info(`Trying to fetch question with ID: ${id}`);
+    const question = await findQuestionById(id);
 
     if (question) {
         res.status(200).json(question);
@@ -101,10 +95,10 @@ app.get('/questions/:id', (req, res) => {
     }
 });
 
-app.post('/questions', (req, res) => {
+app.post('/questions', async (req, res) => {
     logger.info('Trying to add new question');
-    const question = createQuestion(req.body);
     if (req.body.question && req.body.answerA && req.body.answerB && req.body.answerC && req.body.correctAnswer) {
+        const question = await createQuestion(req.body);
         res.status(201).json(question);
         logger.info('Entry added successfully');
     } else {
@@ -113,19 +107,19 @@ app.post('/questions', (req, res) => {
     }
 });
 
-app.delete('/questions/:id', (req, res) => {
-    logger.info('Trying to delete question with ID:', req.params.id);
-    if (!req.params.id) {
+app.delete('/questions/:id', async (req, res) => {
+    const id = Number(req.params.id);
+    logger.info('Trying to delete question with ID:' + id);
+    if (!id) {
         res.status(400).json({ message: 'ID is required' });
         logger.error('ID is required');
         return;
     }
-    const id = Number(req.params.id);
-    const question = deleteQuestion(id);
+    const question = await deleteQuestion(id);
 
     if (question) {
-        res.status(200).json({ message: 'Entry deleted successfully' });
-        logger.info('Entry deleted successfully');
+        res.status(200).json({ message: `Entry with ID: ${id} deleted successfully` });
+        logger.info(`Entry with ID: ${id} deleted successfully`);
     } else {
         res.status(404).json({ message: 'Entry not found' });
         logger.error('Entry not found');

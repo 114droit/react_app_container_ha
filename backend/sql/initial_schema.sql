@@ -1,4 +1,4 @@
-CREATE TABLE Questions (
+CREATE TABLE questions (
     id SERIAL PRIMARY KEY,
     question TEXT NOT NULL,
     answerA TEXT NOT NULL,
