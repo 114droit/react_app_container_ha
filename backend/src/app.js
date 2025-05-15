@@ -1,11 +1,18 @@
 import express from 'express';
 import cors from 'cors';
-import fs from 'fs';
+// import fs from 'fs';
 import logger from './utils/logger.js';
 // import health from './utils/health.js';
+import { findAllQuestions, findQuestionById, createQuestion, deleteQuestion } from './services/questionsServices.js';
+import { testDbConnection } from './db.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.use(express.json());
+app.use(cors({
+    origin: ['http://localhost:5173', 'http://localhost:8080'] // Anfragen von localhost:5173 und localhost:3000 erlauben
+}));
 
 // Logger for logging DB connection details
 logger.info('Starting backend Api...');
@@ -17,36 +24,37 @@ logger.info('Database Configuration (received via ENV):',{
     DB_PASSWORD: '******'
 });
 logger.info('----------------------------------------------------');
-
-app.use(express.json());
-app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:8080'] // Anfragen von localhost:5173 und localhost:3000 erlauben
-}));
+try {
+    testDbConnection();
+    logger.info('Database connection successful');
+} catch (error) {
+    logger.error('Database connection error:', error);
+}
 
 // Health check endpoint
 // app.use('/api/health', health());
 
 // Middleware to load questions from JSON file
-function getQuestions() {
-    try {
-        const raw = fs.readFileSync('/app/data/questions.json');
-        const parsed = JSON.parse(raw);
-        return parsed.questions || [];
-    } catch (error) {
-        logger.error('Error reading questions file:');
-        return [];
-    }
-}
+// function getQuestions() {
+//     try {
+//         const raw = fs.readFileSync('/app/data/questions.json');
+//         const parsed = JSON.parse(raw);
+//         return parsed.questions || [];
+//     } catch (error) {
+//         logger.error('Error reading questions file:');
+//         return [];
+//     }
+// }
 
 // Middleware to save questions to JSON file
-function saveQuestions(questions) {
-    try {
-        const data = JSON.stringify({ questions }, null, 2);
-        fs.writeFileSync('/app/data/questions.json', data);
-    } catch (error) {
-        logger.error('Error saving questions file:');
-    }
-}
+// function saveQuestions(questions) {
+//     try {
+//         const data = JSON.stringify({ questions }, null, 2);
+//         fs.writeFileSync('/app/data/questions.json', data);
+//     } catch (error) {
+//         logger.error('Error saving questions file:');
+//     }
+// }
 
 
 // This will start the server and listen on the specified port
@@ -63,7 +71,7 @@ app.get('/', (req, res) => {
 
 app.get('/questions', (req, res) => {
     logger.info('Trying to fetch all questions');
-    const questions = getQuestions();
+    const questions = findAllQuestions();
     if (questions.length > 0) {
         res.status(200).json(questions);
         logger.info('Questions fetched successfully');
@@ -82,7 +90,7 @@ app.get('/questions/:id', (req, res) => {
     }
     logger.info('Trying to fetch question with ID:', req.params.id);
     const id = Number(req.params.id);
-    const question = getQuestions().find(question => question.id === id);
+    const question = findQuestionById(id);
 
     if (question) {
         res.status(200).json(question);
@@ -95,17 +103,9 @@ app.get('/questions/:id', (req, res) => {
 
 app.post('/questions', (req, res) => {
     logger.info('Trying to add new question');
-    const question = {
-        id: getQuestions().length + 1,
-        question: req.body.question,
-        answerA: req.body.answerA,
-        answerB: req.body.answerB,
-        answerC: req.body.answerC,
-        correctAnswer: req.body.correctAnswer
-    };
+    const question = createQuestion(req.body);
     if (req.body.question && req.body.answerA && req.body.answerB && req.body.answerC && req.body.correctAnswer) {
-        saveQuestions([...getQuestions(), question]);
-        res.status(201).json({ message: 'Entry added successfully' });
+        res.status(201).json(question);
         logger.info('Entry added successfully');
     } else {
         res.status(400).json({ message: '1 Question and 4 answers required' });
@@ -121,11 +121,9 @@ app.delete('/questions/:id', (req, res) => {
         return;
     }
     const id = Number(req.params.id);
-    const question = getQuestions().find(question => question.id === id);
+    const question = deleteQuestion(id);
 
     if (question) {
-        const questions = getQuestions().filter(question => question.id !== id);
-        saveQuestions(questions);
         res.status(200).json({ message: 'Entry deleted successfully' });
         logger.info('Entry deleted successfully');
     } else {

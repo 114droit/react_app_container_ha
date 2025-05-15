@@ -4,5 +4,5 @@ CREATE TABLE Questions (
     answerA TEXT NOT NULL,
     answerB TEXT NOT NULL,
     answerC TEXT NOT NULL,
-    correctAnswer TEXT NOT NULL,
+    correctAnswer TEXT NOT NULL
 );
