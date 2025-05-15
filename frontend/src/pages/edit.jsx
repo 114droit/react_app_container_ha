@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Edit() {
+  // const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState("");
   const [answerA, setAnswerA] = useState("");
   const [answerB, setAnswerB] = useState("");
@@ -11,6 +12,55 @@ function Edit() {
   const [loading, setLoading] = useState(false);
 
   const API_URL = import.meta.env.VITE_API_URL
+
+  // Array of questions for styling purposes (npm run dev)
+  const questions = [
+    {
+      id: 1,
+      question: "What is the capital of France?",
+      answera: "Berlin",
+      answerb: "Madrid",
+      answerc: "Paris",
+      correctanswer: "Paris",
+    },
+    {
+      id: 2,
+      question: "What is the capital of Germany?",
+      answera: "Berlin",
+      answerb: "Madrid",
+      answerc: "Paris",
+      correctanswer: "Berlin",
+    },
+    {
+      id: 3,
+      question: "What is the capital of Spain?",
+      answera: "Berlin",
+      answerb: "Madrid",
+      answerc: "Paris",
+      correctanswer: "Madrid",
+    },
+  ];
+
+  // useEffect(() => {
+  //   fetchQuestions();
+  // }, []);
+
+  // const fetchQuestions = async () => {
+  //   setLoading(true); // Ladezustand aktivieren
+  //   try {
+  //     const response = await fetch(`/${API_URL}/questions`);
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setQuestions(data);
+  //     } else {
+  //       console.error("Failed to fetch questions");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   } finally {
+  //     setLoading(false); // Ladezustand deaktivieren
+  //   }
+  // };
 
   const createNewQuiz = async () => {
     setLoading(true); // Ladezustand aktivieren
@@ -64,8 +114,8 @@ function Edit() {
 
   if (!message)
     return (
-      <div className="bg-gray-900 text-amber-100 h-screen flex justify-center items-center">
-        <div className="h-120">
+      <div className="bg-gray-900 text-amber-100 min-h-screen w-full flex justify-center items-center">
+        <div className="mt-20">
           <h1 className="text-3xl font-bold mb-4">Edit Quiz</h1>
           <form className="space-y-4">
             <input
@@ -99,7 +149,7 @@ function Edit() {
               onChange={(event) => setCorrectAnswer(event.target.value)}
             />
             <button
-              className="flex-row w-64 mr-72 justify-center p-2 bg-emerald-500 hover:bg-emerald-400 inset-shadow-sm inset-shadow-emerald-800 shadow-xl shadow-emeral-800 hover:shadow-emerald-400/50 transition-all rounded"
+              className="flex-row w-64 mr-72 justify-center p-2 bg-emerald-600 hover:bg-emerald-400 ring-2 ring-emerald-900 shadow-md shadow-emerald-400/50 hover:shadow-emerald-400/50 transition-all rounded"
               onClick={(e) => {
                 e.preventDefault();
                 createNewQuiz();
@@ -124,6 +174,28 @@ function Edit() {
               Delete
             </button>
           </form>
+          <ul className="max-h-50 overflow-y-auto">
+            {questions.map((question) => (
+              <li
+                key={question.id}
+                className="bg-gray-800 p-4 mb-2 rounded shadow-md"
+              >
+                <p>{question.question}</p>
+                <p>{question.answera}</p>
+                <p>{question.answerb}</p>
+                <p>{question.answerc}</p>
+                <p>{question.correctanswer}</p>
+                <button
+                  className="mt-2 p-2 bg-red-600 hover:bg-red-700 rounded"
+                  onClick={() => setId(question.id)}
+                >
+                  Select for Deletion
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
         </div>
       </div>
     );
