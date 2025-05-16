@@ -115,7 +115,7 @@ function Edit() {
   if (!message)
     return (
       <div className="bg-gray-900 text-amber-100 min-h-screen w-full flex justify-center items-center">
-        <div className="mt-20">
+        <div className="mt-10">
           <h1 className="text-3xl font-bold mb-4">Edit Quiz</h1>
           <form className="space-y-4">
             <input
