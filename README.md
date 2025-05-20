@@ -26,3 +26,8 @@ Siehe sql-recap.md im Wurzelverzeichnis
 ### **Was ist der Vorteil eines Containers gegenüber einem „lokalen Build“?**
 
 > Der Container bietet eine portable und reproduzierbare Umgebung, die unabhängig von der lokalen Umgebung immer mit den gleichen Abhängigkeiten und Konfigurationen ausgeführt werden kann, während für einen lokalen Build bspw. meist erst Abhnängikeiten installiert und Konfigurationen vorgenommen werden müssen
+
+
+## Laufende Anwendung mit funktionierendem CRUD**
+
+/screenshots/CRUD-Anwendung.png
