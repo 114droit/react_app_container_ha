@@ -1,4 +1,4 @@
-CREATE TABLE questions (
+CREATE TABLE IF NOT EXISTS questions (
     id SERIAL PRIMARY KEY,
     question TEXT NOT NULL,
     answerA TEXT NOT NULL,

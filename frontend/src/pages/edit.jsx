@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 function Edit() {
-  // const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState("");
   const [answerA, setAnswerA] = useState("");
   const [answerB, setAnswerB] = useState("");
@@ -14,53 +14,53 @@ function Edit() {
   const API_URL = import.meta.env.VITE_API_URL
 
   // Array of questions for styling purposes (npm run dev)
-  const questions = [
-    {
-      id: 1,
-      question: "What is the capital of France?",
-      answera: "Berlin",
-      answerb: "Madrid",
-      answerc: "Paris",
-      correctanswer: "Paris",
-    },
-    {
-      id: 2,
-      question: "What is the capital of Germany?",
-      answera: "Berlin",
-      answerb: "Madrid",
-      answerc: "Paris",
-      correctanswer: "Berlin",
-    },
-    {
-      id: 3,
-      question: "What is the capital of Spain?",
-      answera: "Berlin",
-      answerb: "Madrid",
-      answerc: "Paris",
-      correctanswer: "Madrid",
-    },
-  ];
+  // const questions = [
+  //   {
+  //     id: 1,
+  //     question: "What is the capital of France?",
+  //     answera: "Berlin",
+  //     answerb: "Madrid",
+  //     answerc: "Paris",
+  //     correctanswer: "Paris",
+  //   },
+  //   {
+  //     id: 2,
+  //     question: "What is the capital of Germany?",
+  //     answera: "Berlin",
+  //     answerb: "Madrid",
+  //     answerc: "Paris",
+  //     correctanswer: "Berlin",
+  //   },
+  //   {
+  //     id: 3,
+  //     question: "What is the capital of Spain?",
+  //     answera: "Berlin",
+  //     answerb: "Madrid",
+  //     answerc: "Paris",
+  //     correctanswer: "Madrid",
+  //   },
+  // ];
 
-  // useEffect(() => {
-  //   fetchQuestions();
-  // }, []);
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
 
-  // const fetchQuestions = async () => {
-  //   setLoading(true); // Ladezustand aktivieren
-  //   try {
-  //     const response = await fetch(`/${API_URL}/questions`);
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       setQuestions(data);
-  //     } else {
-  //       console.error("Failed to fetch questions");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   } finally {
-  //     setLoading(false); // Ladezustand deaktivieren
-  //   }
-  // };
+  const fetchQuestions = async () => {
+    setLoading(true); // Ladezustand aktivieren
+    try {
+      const response = await fetch(`/${API_URL}/questions`);
+      if (response.ok) {
+        const data = await response.json();
+        setQuestions(data);
+      } else {
+        console.error("Failed to fetch questions");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false); // Ladezustand deaktivieren
+    }
+  };
 
   const createNewQuiz = async () => {
     setLoading(true); // Ladezustand aktivieren
