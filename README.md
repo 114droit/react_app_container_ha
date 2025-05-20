@@ -30,4 +30,4 @@ Siehe sql-recap.md im Wurzelverzeichnis
 
 ## Laufende Anwendung mit funktionierendem CRUD**
 
-/screenshots/CRUD-Anwendung.png
+!(/screenshots/CRUD-Anwendung.png)
