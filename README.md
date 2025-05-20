@@ -31,3 +31,10 @@ Siehe sql-recap.md im Wurzelverzeichnis
 ## Laufende Anwendung mit funktionierendem CRUD**
 
 ![CRUD-Anwendung](/screenshots/CRUD-Anwendung.png)
+
+![CRUD-Anwendung](/screenshots/CRUD-AnwendungII.png)
+
+
+## docker stack services**
+
+![docker-stack-services](/screenshots/docker%20stack%20services.png)
