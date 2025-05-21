@@ -28,13 +28,13 @@ Siehe sql-recap.md im Wurzelverzeichnis
 > Der Container bietet eine portable und reproduzierbare Umgebung, die unabhängig von der lokalen Umgebung immer mit den gleichen Abhängigkeiten und Konfigurationen ausgeführt werden kann, während für einen lokalen Build bspw. meist erst Abhnängikeiten installiert und Konfigurationen vorgenommen werden müssen
 
 
-## Laufende Anwendung mit funktionierendem CRUD**
+## Laufende Anwendung mit funktionierendem CRUD
 
 ![CRUD-Anwendung](/screenshots/CRUD-Anwendung.png)
 
 ![CRUD-Anwendung](/screenshots/CRUD-AnwendungII.png)
 
 
-## docker stack services**
+## docker stack services
 
 ![docker-stack-services](/screenshots/docker%20stack%20services.png)
