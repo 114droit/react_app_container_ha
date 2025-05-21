@@ -37,4 +37,4 @@ Siehe sql-recap.md im Wurzelverzeichnis
 
 ## docker stack services
 
-![docker-stack-services](/screenshots/docker%20stack%20services.png)
+![docker-stack-services](/screenshots/docker_stack_services.png)
